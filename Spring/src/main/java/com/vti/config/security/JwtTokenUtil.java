@@ -107,7 +107,7 @@ public class JwtTokenUtil implements Serializable {
 
 //		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(createdDate)
 //				.setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(createdDate)
 				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
@@ -125,7 +125,7 @@ public class JwtTokenUtil implements Serializable {
 //		claims.setExpiration(expirationDate);
 
 //		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
-		return Jwts.builder().setClaims(claims).setSubject(token).setIssuedAt(new Date(System.currentTimeMillis()))
+		return Jwts.builder().setClaims(claims).setSubject(token).setIssuedAt(createdDate)
 				.setExpiration(new Date(System.currentTimeMillis() + refreshExpirationDateInMs))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}

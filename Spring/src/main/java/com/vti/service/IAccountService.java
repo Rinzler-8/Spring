@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.vti.entity.Account;
 import com.vti.form.AccountFormForCreating;
-import com.vti.form.AccountFormForRegister;
 import com.vti.form.AccountFormForUpdating;
 
 public interface IAccountService {
@@ -20,7 +19,5 @@ public interface IAccountService {
 	public void deleteAccount(short id);
 
 	public Account findByUsername(String username);
-
-	public void registerAccount(AccountFormForRegister accountFormRegister);
 
 }

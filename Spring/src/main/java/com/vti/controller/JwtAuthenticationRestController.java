@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vti.config.security.AuthenticationException;
 import com.vti.config.security.JwtTokenUtil;
-import com.vti.dto.AccountDto2;
+import com.vti.form.AccountFormForRegister;
 import com.vti.payload.JwtTokenRequest;
 import com.vti.payload.JwtTokenResponse;
 import com.vti.service.JwtInMemoryUserDetailsService;
@@ -63,7 +63,7 @@ public class JwtAuthenticationRestController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody AccountDto2 account) throws Exception {
+	public ResponseEntity<?> saveUser(@RequestBody AccountFormForRegister account) throws Exception {
 		return ResponseEntity.ok(userDetailsService.save(account));
 	}
 

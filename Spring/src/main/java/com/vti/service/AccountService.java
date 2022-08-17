@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 
 import com.vti.entity.Account;
 import com.vti.form.AccountFormForCreating;
-import com.vti.form.AccountFormForRegister;
 import com.vti.form.AccountFormForUpdating;
 import com.vti.repository.IAccountRepository;
 import com.vti.specification.AccountSpecification;
@@ -103,24 +102,5 @@ public class AccountService implements IAccountService {
 //			throw new UsernameNotFoundException("User not found with username: " + username);
 //		}
 //	}
-
-	@Override
-	public void registerAccount(AccountFormForRegister accountFormRegister) {
-		Account account = new Account();
-
-		account.setEmail(accountFormRegister.getEmail());
-		account.setUsername(accountFormRegister.getUsername());
-		account.setFullname(accountFormRegister.getFullname());
-		account.setAvatarImageName(accountFormRegister.getAvatarImageName());
-		account.setMobile(accountFormRegister.getMobile());
-		account.setAddress(accountFormRegister.getAddress());
-		// Ma hoa password
-		String passEncode = passwordEncoder.encode(accountFormRegister.getPassword());
-
-		// Luu thong tin password
-		account.setPassword(passEncode);
-
-		accountRepository.save(account);
-	}
 
 }

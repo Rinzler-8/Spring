@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.vti.dto.AccountDto2;
-import com.vti.entity.Account2;
+import com.vti.entity.Account;
+import com.vti.form.AccountFormForRegister;
 import com.vti.repository.IAccountRepository2;
 
 @Service
@@ -25,7 +25,7 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account2 account = accountDAO.findByUsername(username);
+		Account account = accountDAO.findByUsername(username);
 		if (account == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		} else {
@@ -41,17 +41,26 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
 	}
 
-//	public Account save(AccountDto account) {
-//		Account newAccount = new Account();
+	public Account save(AccountFormForRegister accountFormRegister) {
+		Account newAccount = new Account();
+		newAccount.setEmail(accountFormRegister.getEmail());
+		newAccount.setUsername(accountFormRegister.getUsername());
+		newAccount.setFullname(accountFormRegister.getFullname());
+		newAccount.setAvatarImageName(accountFormRegister.getAvatarImageName());
+		newAccount.setMobile(accountFormRegister.getMobile());
+		newAccount.setAddress(accountFormRegister.getAddress());
+		// Ma hoa password
+		String passEncode = bcryptEncoder.encode(accountFormRegister.getPassword());
+
+		// Luu thong tin password
+		newAccount.setPassword(passEncode);
+		return accountDAO.save(newAccount);
+	}
+
+//	public Account2 save(AccountDto2 account) {
+//		Account2 newAccount = new Account2();
 //		newAccount.setUsername(account.getUsername());
 //		newAccount.setPassword(bcryptEncoder.encode(account.getPassword()));
 //		return accountDAO.save(newAccount);
 //	}
-
-	public Account2 save(AccountDto2 account) {
-		Account2 newAccount = new Account2();
-		newAccount.setUsername(account.getUsername());
-		newAccount.setPassword(bcryptEncoder.encode(account.getPassword()));
-		return accountDAO.save(newAccount);
-	}
 }
