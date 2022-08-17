@@ -116,13 +116,13 @@ public class JwtTokenUtil implements Serializable {
 		return (!isTokenExpired(token) || ignoreTokenExpiration(token));
 	}
 
-	public String refreshToken(String token) {
+	public String refreshToken(Map<String, Object> claims, String token) {
 		final Date createdDate = clock.now();
 		final Date expirationDate = calculateExpirationDate(createdDate);
 
-		final Claims claims = getAllClaimsFromToken(token);
-		claims.setIssuedAt(createdDate);
-		claims.setExpiration(expirationDate);
+//		final Claims claims = getAllClaimsFromToken(token);
+//		claims.setIssuedAt(createdDate);
+//		claims.setExpiration(expirationDate);
 
 //		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
 		return Jwts.builder().setClaims(claims).setSubject(token).setIssuedAt(new Date(System.currentTimeMillis()))
