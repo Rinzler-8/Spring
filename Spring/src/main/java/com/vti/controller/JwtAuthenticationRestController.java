@@ -28,7 +28,7 @@ import com.vti.config.security.JwtTokenUtil;
 import com.vti.form.AccountFormForRegister;
 import com.vti.payload.JwtTokenRequest;
 import com.vti.payload.JwtTokenResponse;
-import com.vti.service.JwtInMemoryUserDetailsService;
+import com.vti.service.AccountService;
 
 import io.jsonwebtoken.impl.DefaultClaims;
 
@@ -47,9 +47,9 @@ public class JwtAuthenticationRestController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	private JwtInMemoryUserDetailsService userDetailsService;
+	private AccountService userDetailsService;
 
-	@RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
+	@RequestMapping(value = "${jwt.get.token.url}", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
 			throws AuthenticationException {
 
@@ -67,7 +67,7 @@ public class JwtAuthenticationRestController {
 		return ResponseEntity.ok(userDetailsService.save(account));
 	}
 
-//	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
+//	@RequestMapping(value = "${jwt.refresh.token.url}", method = RequestMethod.GET)
 //	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) throws Exception {
 //		String authToken = request.getHeader(tokenHeader);
 //		final String token = authToken.substring(7);

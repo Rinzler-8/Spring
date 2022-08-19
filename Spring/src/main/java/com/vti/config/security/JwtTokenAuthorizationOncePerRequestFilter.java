@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.vti.service.JwtInMemoryUserDetailsService;
+import com.vti.service.AccountService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -28,7 +28,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private JwtInMemoryUserDetailsService jwtInMemoryUserDetailsService;
+	private AccountService accountService;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -71,7 +71,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 		logger.debug("JWT_TOKEN_USERNAME_VALUE '{}'", username);
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-			UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
+			UserDetails userDetails = this.accountService.loadUserByUsername(username);
 
 			// if token is valid configure Spring Security to manually set
 			// authentication

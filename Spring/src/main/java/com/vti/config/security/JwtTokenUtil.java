@@ -33,7 +33,8 @@ public class JwtTokenUtil implements Serializable {
 	@Value("${jwt.secret}")
 	private String secret;
 
-	@Value("${jwt.token.expiration.in.seconds}")
+//	@Value("${jwt.token.expiration.in.seconds}")
+	@Value("${jwt.refreshExpirationDateInMs}")
 	private Long expiration;
 
 	@Value("${jwt.expirationDateInMs}")
@@ -105,8 +106,6 @@ public class JwtTokenUtil implements Serializable {
 		final Date createdDate = clock.now();
 		final Date expirationDate = calculateExpirationDate(createdDate);
 
-//		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(createdDate)
-//				.setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(createdDate)
 				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
@@ -122,7 +121,7 @@ public class JwtTokenUtil implements Serializable {
 
 //		final Claims claims = getAllClaimsFromToken(token);
 //		claims.setIssuedAt(createdDate);
-//		claims.setExpiration(expirationDate);
+//		claims.setExpiration(new Date(System.currentTimeMillis() + refreshExpirationDateInMs));
 
 //		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
 		return Jwts.builder().setClaims(claims).setSubject(token).setIssuedAt(createdDate)
@@ -141,7 +140,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	public List<SimpleGrantedAuthority> getRolesFromToken(String token) {
-		Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		Claims claims = getAllClaimsFromToken(token);
 
 		List<SimpleGrantedAuthority> roles = null;
 
@@ -158,4 +157,5 @@ public class JwtTokenUtil implements Serializable {
 		return roles;
 
 	}
+
 }

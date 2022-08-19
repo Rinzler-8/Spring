@@ -1,15 +1,21 @@
 package com.vti.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.vti.entity.Account;
 import com.vti.form.AccountFormForCreating;
+import com.vti.form.AccountFormForRegister;
 import com.vti.form.AccountFormForUpdating;
 import com.vti.repository.IAccountRepository;
 import com.vti.specification.AccountSpecification;
@@ -82,25 +88,38 @@ public class AccountService implements IAccountService {
 		return accountRepository.findByUsername(username);
 	}
 
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		// TODO Auto-generated method stub
-//		Account account = accountRepository.findByUsername(username);
-//		if (account == null) {
-//			throw new UsernameNotFoundException(username);
-//		} else {
-//			return new User(account.getUsername(), account.getPassword(), AuthorityUtils.createAuthorityList("user"));
-//		}
-//	}
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Account account = accountRepository.findByUsername(username);
+		if (account == null) {
+			throw new UsernameNotFoundException("User not found with username: " + username);
+		} else {
+			return new User(account.getUsername(), account.getPassword(), new ArrayList<>());
+		}
 
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //		if ("javainuse".equals(username)) {
 //			return new User("javainuse", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
 //					new ArrayList<>());
 //		} else {
 //			throw new UsernameNotFoundException("User not found with username: " + username);
 //		}
-//	}
+
+	}
+
+	public Account save(AccountFormForRegister accountFormRegister) {
+		Account newAccount = new Account();
+		newAccount.setEmail(accountFormRegister.getEmail());
+		newAccount.setUsername(accountFormRegister.getUsername());
+		newAccount.setFullname(accountFormRegister.getFullname());
+		newAccount.setAvatarImageName(accountFormRegister.getAvatarImageName());
+		newAccount.setMobile(accountFormRegister.getMobile());
+		newAccount.setAddress(accountFormRegister.getAddress());
+		// Ma hoa password
+		String passEncode = passwordEncoder.encode(accountFormRegister.getPassword());
+
+		// Luu thong tin password
+		newAccount.setPassword(passEncode);
+		return accountRepository.save(newAccount);
+	}
 
 }

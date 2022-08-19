@@ -27,12 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private JwtUnAuthorizedResponseAuthenticationEntryPoint jwtUnAuthorizedResponseAuthenticationEntryPoint;
 
 	@Autowired
-	private UserDetailsService jwtInMemoryUserDetailsService;
+	private UserDetailsService AccountService;
 
 	@Autowired
 	private JwtTokenAuthorizationOncePerRequestFilter jwtTokenAuthorizationOncePerRequestFilter;
 
-	@Value("${jwt.get.token.uri}")
+	@Value("${jwt.get.token.url}")
 	private String authenticationPath;
 
 	@Autowired
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// configure AuthenticationManager so that it knows from where to load
 		// user for matching credentials
 		// Use BCryptPasswordEncoder
-		auth.userDetailsService(jwtInMemoryUserDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(AccountService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean

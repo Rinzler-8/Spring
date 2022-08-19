@@ -58,17 +58,17 @@ public class Account implements Serializable {
 
 	@Column(name = "`Role`")
 	@Enumerated(EnumType.ORDINAL)
-	private Role role = Role.USER;
+	private ERole role = ERole.USER;
 
 	public Account() {
 		super();
 	}
 
-	public Role getRole() {
+	public ERole getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(ERole role) {
 		this.role = role;
 	}
 

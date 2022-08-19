@@ -2,6 +2,8 @@ package com.vti.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.vti.entity.Account;
 import com.vti.form.AccountFormForCreating;
@@ -19,5 +21,7 @@ public interface IAccountService {
 	public void deleteAccount(short id);
 
 	public Account findByUsername(String username);
+
+	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
 }
