@@ -49,7 +49,7 @@ public class JwtAuthenticationRestController {
 	@Autowired
 	private AccountService userDetailsService;
 
-	@RequestMapping(value = "${jwt.get.token.url}", method = RequestMethod.POST)
+	@RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
 			throws AuthenticationException {
 
@@ -64,25 +64,10 @@ public class JwtAuthenticationRestController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody AccountFormForRegister account) throws Exception {
-		return ResponseEntity.ok(userDetailsService.save(account));
+		return ResponseEntity.ok(userDetailsService.register(account));
 	}
 
-//	@RequestMapping(value = "${jwt.refresh.token.url}", method = RequestMethod.GET)
-//	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) throws Exception {
-//		String authToken = request.getHeader(tokenHeader);
-//		final String token = authToken.substring(7);
-//		String username = jwtTokenUtil.getUsernameFromToken(token);
-//		Account user = (Account) userDetailsService.loadUserByUsername(username);
-//
-//		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
-//			String refreshedToken = jwtTokenUtil.refreshToken(token);
-//			return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
-//		} else {
-//			return ResponseEntity.badRequest().body(null);
-//		}
-//	}
-
-	@RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
+	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
 	public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
 		// From the HttpRequest get the claims
 		DefaultClaims claims = (DefaultClaims) request.getAttribute("claims");

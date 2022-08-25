@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtTokenAuthorizationOncePerRequestFilter jwtTokenAuthorizationOncePerRequestFilter;
 
-	@Value("${jwt.get.token.url}")
+	@Value("${jwt.get.token.uri}")
 	private String authenticationPath;
 
 	@Autowired

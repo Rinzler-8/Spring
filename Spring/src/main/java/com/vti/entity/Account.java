@@ -2,14 +2,17 @@ package com.vti.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -52,24 +55,20 @@ public class Account implements Serializable {
 	@Column(name = "Password", length = 100, nullable = true)
 	private String password;
 
-	@Column(name = "`Status`")
-	@Enumerated(EnumType.ORDINAL)
-	private Status status = Status.NOT_ACTIVE;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "UserRoles", joinColumns = @JoinColumn(name = "AccountID"), inverseJoinColumns = @JoinColumn(name = "RoleId"))
+	private List<Role> roles;
 
-	@Column(name = "`Role`")
-	@Enumerated(EnumType.ORDINAL)
-	private ERole role = ERole.USER;
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	public Account() {
 		super();
-	}
-
-	public ERole getRole() {
-		return role;
-	}
-
-	public void setRole(ERole role) {
-		this.role = role;
 	}
 
 	public short getId() {
@@ -142,14 +141,6 @@ public class Account implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 
 }

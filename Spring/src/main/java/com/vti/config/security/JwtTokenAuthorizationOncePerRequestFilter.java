@@ -59,7 +59,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 				String isRefreshToken = request.getHeader("isRefreshToken");
 				String requestURL = request.getRequestURL().toString();
 				// allow for Refresh Token creation if following conditions are true.
-				if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshtoken")) {
+				if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshToken")) {
 					allowForRefreshToken(e, request);
 				} else
 					request.setAttribute("exception", e);

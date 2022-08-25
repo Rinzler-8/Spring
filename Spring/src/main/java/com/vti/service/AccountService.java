@@ -106,7 +106,7 @@ public class AccountService implements IAccountService {
 
 	}
 
-	public Account save(AccountFormForRegister accountFormRegister) {
+	public Account register(AccountFormForRegister accountFormRegister) {
 		Account newAccount = new Account();
 		newAccount.setEmail(accountFormRegister.getEmail());
 		newAccount.setUsername(accountFormRegister.getUsername());

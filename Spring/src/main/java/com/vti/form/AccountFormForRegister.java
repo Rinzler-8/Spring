@@ -1,5 +1,7 @@
 package com.vti.form;
 
+import com.vti.entity.ERole;
+
 public class AccountFormForRegister {
 	private String email;
 	private String username;
@@ -8,6 +10,15 @@ public class AccountFormForRegister {
 	private String mobile;
 	private String address;
 	private String password;
+	private ERole role = ERole.USER;
+
+	public ERole getRole() {
+		return role;
+	}
+
+	public void setRole(ERole role) {
+		this.role = role;
+	}
 
 	public String getEmail() {
 		return email;

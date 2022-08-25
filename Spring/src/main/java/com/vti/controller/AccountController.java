@@ -72,7 +72,6 @@ public class AccountController {
 				accountDto.setMobile(account.getMobile());
 				accountDto.setAddress(account.getAddress());
 				accountDto.setCreateDate(account.getCreateDate());
-				accountDto.setStatus(account.getStatus().toString());
 				return accountDto;
 			}
 
@@ -97,7 +96,6 @@ public class AccountController {
 			accountDto.setMobile(accountDB.getMobile());
 			accountDto.setAddress(accountDB.getAddress());
 			accountDto.setCreateDate(accountDB.getCreateDate());
-			accountDto.setStatus(accountDB.getStatus().toString());
 
 			return new ResponseEntity<>(accountDto, HttpStatus.OK);
 		} catch (Exception e) {
