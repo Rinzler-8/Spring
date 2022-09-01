@@ -82,7 +82,7 @@
 //			AccountDTO.setId(accountDB.getId());
 //			AccountDTO.setEmail(accountDB.getEmail());
 //			AccountDTO.setUsername(accountDB.getUsername());
-//			AccountDTO.setRole(accountDB.getRoles());
+//			AccountDTO.setRole(accountDB.getRole());
 //			AccountDTO.setStatus(accountDB.getStatus());
 //			return new ResponseEntity<>(AccountDTO, HttpStatus.OK);
 //		} catch (Exception e) {

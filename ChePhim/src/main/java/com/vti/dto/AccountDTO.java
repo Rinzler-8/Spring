@@ -2,14 +2,17 @@ package com.vti.dto;
 
 import java.util.List;
 
+import com.vti.entity.Role;
+import com.vti.entity.Status;
+
 //chuyển đổi giữa dữ liệu lấy được từ DB đẩy lên Frontend.
 public class AccountDTO {
 
 	private Long id;
 	private String email;
 	private String username;
-	private List<String> role;
-	private String status;
+	private List<Role> role;
+	private Status status;
 
 	public Long getId() {
 		return id;
@@ -35,19 +38,19 @@ public class AccountDTO {
 		this.username = username;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public List<String> getRole() {
+	public List<Role> getRole() {
 		return this.role;
 	}
 
-	public void setRole(List<String> role) {
+	public void setRole(List<Role> role) {
 		this.role = role;
 	}
 }

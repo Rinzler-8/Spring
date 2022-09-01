@@ -103,7 +103,7 @@ public class Account {
 		return role;
 	}
 
-	public void setRoles(List<Role> role) {
+	public void setRole(List<Role> role) {
 		this.role = role;
 	}
 }
