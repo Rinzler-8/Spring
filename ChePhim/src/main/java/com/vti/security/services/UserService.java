@@ -1,9 +1,6 @@
 package com.vti.security.services;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +23,8 @@ public class UserService implements UserDetailsService {
 		if (account == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		} else {
-			return new User(account.getUsername(), account.getPassword(), new ArrayList<>());
+			return AccountDetailsImpl.build(account);
 		}
 	}
+
 }

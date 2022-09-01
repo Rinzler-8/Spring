@@ -39,7 +39,8 @@ public class AccountDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = account.getRole().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-		return new AccountDetailsImpl(account.getId(), account.getUsername(), account.getEmail(), account.getPassword(), authorities);
+		return new AccountDetailsImpl(account.getId(), account.getUsername(), account.getEmail(), account.getPassword(),
+				authorities);
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class AccountDetailsImpl implements UserDetails {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		AccountDetailsImpl user = (AccountDetailsImpl) o;
-		return Objects.equals(id, user.id);
+		AccountDetailsImpl account = (AccountDetailsImpl) o;
+		return Objects.equals(id, account.id);
 	}
 }
