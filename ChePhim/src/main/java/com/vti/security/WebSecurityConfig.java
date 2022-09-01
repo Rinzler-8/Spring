@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.vti.security.jwt.AuthEntryPointJwt;
 import com.vti.security.jwt.AuthTokenFilter;
 import com.vti.security.services.AccountService;
+import com.vti.security.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +27,10 @@ import com.vti.security.services.AccountService;
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	AccountService userDetailsService;
+	AccountService accountDetailsService;
+
+	@Autowired
+	UserService userDetailsService;
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
@@ -59,8 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/api/auth/**").permitAll()
 				.antMatchers("/api/auth/signup").permitAll().antMatchers("/api/auth/signin").permitAll()
 				.antMatchers("/api/auth/signout").hasAnyAuthority("USER", "MANAGER", "ADMIN")
-				.antMatchers("/api/test/user").hasAnyAuthority("USER", "MANAGER", "ADMIN")
-				.antMatchers("/api/test/admin").hasAnyAuthority("ADMIN").anyRequest().authenticated();
+				.antMatchers("/api/v1/accounts").hasAnyAuthority("ADMIN").antMatchers("/api/test/user")
+				.hasAnyAuthority("USER", "MANAGER", "ADMIN").antMatchers("/api/test/admin").hasAnyAuthority("ADMIN")
+				.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

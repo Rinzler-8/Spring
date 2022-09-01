@@ -10,10 +10,14 @@ import com.vti.entity.Account;
 public interface IAccountService {
 	public Page<Account> getAllAccounts(Pageable pageable, String search);
 
-	public Account getAccountByID(short id);
+	public Account getAccountByID(Long id);
 
 	public Account findByUsername(String username);
 
 	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+	boolean existsUserByEmail(String email);
+
+	boolean existsUserByUsername(String userName);
 
 }

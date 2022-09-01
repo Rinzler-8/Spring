@@ -28,8 +28,8 @@ import com.vti.payload.request.LoginRequest;
 import com.vti.payload.request.SignupRequest;
 import com.vti.payload.response.MessageResponse;
 import com.vti.payload.response.UserInfoResponse;
+import com.vti.repository.AccountRepository;
 import com.vti.repository.RoleRepository;
-import com.vti.repository.UserRepository;
 import com.vti.security.jwt.JwtUtils;
 import com.vti.security.services.AccountDetailsImpl;
 
@@ -41,7 +41,7 @@ public class AuthController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	UserRepository userRepository;
+	AccountRepository accountRepository;
 
 	@Autowired
 	RoleRepository roleRepository;
@@ -78,11 +78,11 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+		if (accountRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
 		}
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if (accountRepository.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 		}
 
@@ -121,7 +121,7 @@ public class AuthController {
 		}
 
 		account.setRole(roles);
-		userRepository.save(account);
+		accountRepository.save(account);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
