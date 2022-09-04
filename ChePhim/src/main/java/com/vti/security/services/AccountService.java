@@ -36,9 +36,9 @@ public class AccountService implements IAccountService {
 		Specification<Account> whereAccount = null;
 		if (!StringUtils.isEmpty(search)) {
 			AccountSpecification usernameSpecification = new AccountSpecification("username", "LIKE", search);
-			AccountSpecification fullnameSpecification = new AccountSpecification("fullname", "LIKE", search);
+			AccountSpecification roleSpecification = new AccountSpecification("role", "LIKE", search);
 			AccountSpecification emailSpecification = new AccountSpecification("email", "LIKE", search);
-			whereAccount = Specification.where(usernameSpecification).or(fullnameSpecification).or(emailSpecification);
+			whereAccount = Specification.where(usernameSpecification).or(roleSpecification).or(emailSpecification);
 		}
 
 		return accountRepository.findAll(whereAccount, pageable); // findAll - phuong thuc co san cua JPA da duoc xay

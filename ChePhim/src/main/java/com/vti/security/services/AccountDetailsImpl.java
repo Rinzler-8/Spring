@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vti.entity.Account;
+import com.vti.entity.Status;
 
 public class AccountDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
@@ -24,15 +25,18 @@ public class AccountDetailsImpl implements UserDetails {
 	@JsonIgnore
 	private String password;
 
+	private Status status;
+
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public AccountDetailsImpl(Long id, String username, String email, String password,
+	public AccountDetailsImpl(Long id, String username, String email, String password, Status status,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
+		this.status = status;
 	}
 
 	public static AccountDetailsImpl build(Account account) {
@@ -40,7 +44,7 @@ public class AccountDetailsImpl implements UserDetails {
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
 		return new AccountDetailsImpl(account.getId(), account.getUsername(), account.getEmail(), account.getPassword(),
-				authorities);
+				account.getStatus(), authorities);
 	}
 
 	@Override
@@ -59,6 +63,14 @@ public class AccountDetailsImpl implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override

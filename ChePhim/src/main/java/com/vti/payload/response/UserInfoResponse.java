@@ -2,6 +2,8 @@ package com.vti.payload.response;
 
 import java.util.List;
 
+import com.vti.entity.Status;
+
 public class UserInfoResponse {
 	private String token;
 	private String type = "Bearer";
@@ -9,14 +11,17 @@ public class UserInfoResponse {
 	private String username;
 	private String email;
 	private List<String> roles;
+	private Status status;
 
-	public UserInfoResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+	public UserInfoResponse(String accessToken, Long id, String username, String email, List<String> roles,
+			Status status) {
 		super();
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.status = status;
 	}
 
 	public String getAccessToken() {
@@ -49,6 +54,14 @@ public class UserInfoResponse {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public String getUsername() {
