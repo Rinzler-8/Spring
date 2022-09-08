@@ -63,10 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/api/auth/**").permitAll()
 				.antMatchers("/api/v1/auth/signup").anonymous().antMatchers("/api/v1/auth/signin").permitAll()
 				.antMatchers("/api/v1/auth/signout").hasAnyAuthority("USER", "MANAGER", "ADMIN")
-				.antMatchers("/api/v1/accounts").anonymous().antMatchers("/api/v1/accounts/username/**").anonymous()
-				.antMatchers("/api/v1/accounts/email/**").anonymous().antMatchers("/api/test/user")
-				.hasAnyAuthority("USER", "MANAGER", "ADMIN").antMatchers("/api/test/admin").hasAnyAuthority("ADMIN")
-				.anyRequest().authenticated();
+				.antMatchers("/api/v1/accounts").anonymous().antMatchers("/api/v1/accounts/username/**")
+				.hasAuthority("ADMIN").antMatchers("/api/v1/accounts/email/**").hasAuthority("ADMIN")
+				.antMatchers("/api/test/user").hasAnyAuthority("USER", "MANAGER", "ADMIN").antMatchers("/api/test/all")
+				.permitAll().antMatchers("/api/test/admin").hasAnyAuthority("ADMIN").anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
